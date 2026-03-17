@@ -13,7 +13,7 @@ import {
   CircularProgress,
   Skeleton,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../imagedbfirebase";
@@ -34,6 +34,7 @@ import Swal from "sweetalert2";
 import backgroundImage from "../../assets/background.jpg";
 import AddCircleTwoToneIcon from "@mui/icons-material/AddCircleTwoTone";
 import UserImageUpload from "../SubComponents/UserImageUpload";
+import { AppCustomContext } from "../../App";
 
 export default function UserManagement({ username }) {
   const [users, setUsers] = useState([]);
@@ -42,6 +43,7 @@ export default function UserManagement({ username }) {
   const imageListRef = ref(storage, "UserImages/");
   const [existingUsernames, setExistingUsernames] = useState([]);
   const [offsetY, setOffsetY] = useState(0);
+    const { usernamee, rolee, show, setShow } = useContext(AppCustomContext);
 
   const handleScroll = () => {
     setOffsetY(window.pageYOffset);
@@ -49,7 +51,7 @@ export default function UserManagement({ username }) {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-
+    setShow(true)
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };

@@ -32,6 +32,7 @@ import CashierDashBoard from "./components/RoleBasedAccess/Cashier/CashierDashbo
 import SidebarCashier from "./components/RoleBasedAccess/Cashier/SidebarCashier.jsx";
 import CashierCustomers from "./components/RoleBasedAccess/Cashier/CashierCustomers.jsx";
 import Swal from "sweetalert2";
+import CustomerDashboard from "./components/Pages/CustomerDashboard.jsx";
 
 export const AppCustomContext = createContext();
 
@@ -45,7 +46,7 @@ function parseJwt(token) {
       .map(function (c) {
         return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
       })
-      .join("")
+      .join(""),
   );
 
   return JSON.parse(jsonPayload);
@@ -242,7 +243,8 @@ export default function App() {
                   <>
                     <AdminAuth>
                       <Sidebar />
-                      <DashboardMain />
+                      {/* <DashboardMain /> */}
+                      <CustomerDashboard/>
                     </AdminAuth>
                   </>
                 }

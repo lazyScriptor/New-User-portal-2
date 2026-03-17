@@ -623,12 +623,12 @@ export function CustomerPageMiddle() {
                 }}
               >
                 {/* Open Child Customer dialog */}
-                <Button
+                {/* <Button
                   variant="outlined"
                   onClick={() => setOpenChildDialog(true)}
                 >
                   Add Child Customer
-                </Button>
+                </Button> */}
 
                 {/* The popup */}
                 <AddChildCustomerDialog
