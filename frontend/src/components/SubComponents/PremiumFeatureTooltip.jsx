@@ -16,7 +16,7 @@ const PremiumFeatureTooltip = forwardRef((props, ref) => {
   return (
     <Tooltip
       title={
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, p: 0.5 }}>
+        <Box sx={{ display: "flex", alignItems: "center",justifyContent: "center", gap: 1.5, p: 0.5 }}>
           <WorkspacePremiumIcon
             sx={{
               color: "#FFD700",

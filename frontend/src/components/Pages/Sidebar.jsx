@@ -143,8 +143,9 @@ function Sidebar() {
               handlefunction={handleShow}
               name="Reports"
               icon={faNewspaper}
-              destination="/Reports"
+              destination="/Reports-invoices"
             />
+            
             <DashboardCategoryBtn
               handlefunction={handleShow}
               name="User"

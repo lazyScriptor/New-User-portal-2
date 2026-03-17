@@ -53,7 +53,7 @@ export default function CustomerDashboard() {
       title: "Reports",
       desc: "Analyze business metrics, logs, and general reports",
       icon: faNewspaper,
-      path: "/Reports",
+      path: "/Reports-invoices",
     },
     {
       title: "User Management",
