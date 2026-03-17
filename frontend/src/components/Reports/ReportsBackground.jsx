@@ -104,7 +104,7 @@ export default function ReportsBackground() {
                 >
                   <Tab label="Equipment Utilization Report" {...a11yProps(0)} />
                   <Tab label="Equipment Revenue Report" {...a11yProps(1)} />
-                  <Tab
+                  <Tab 
                     label="Under Utilized Equipment Report"
                     {...a11yProps(2)}
                   />
@@ -121,7 +121,7 @@ export default function ReportsBackground() {
             </Accordion>
           </Box>
           <Box width={"80%"}>
-            <CustomTabPanel value={value} index={0}>
+            <CustomTabPanel value={value} index={0} >
               <EquipmentItem1 />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>

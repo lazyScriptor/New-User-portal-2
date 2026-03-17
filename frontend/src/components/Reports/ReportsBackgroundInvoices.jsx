@@ -12,6 +12,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import InvoiceItem1 from "./InvoiceItem1";
 import InvoiceItem2 from "./InvoiceItem2";
+import PremiumFeatureTooltip from "../SubComponents/PremiumFeatureTooltip";
 
 function ReportsBackgroundInvoices() {
   function CustomTabPanel(props) {
@@ -50,7 +51,6 @@ function ReportsBackgroundInvoices() {
       <Box id="main-body">
         <Box id="body" sx={{ display: "flex", flexDirection: "column" }}>
           <Box component={Paper} sx={{ width: "100%", height: "auto" }}>
-
             <Box sx={{ height: "10vh", display: "flex", width: "100%" }}>
               <ReportsNavBar />
             </Box>
@@ -83,7 +83,13 @@ function ReportsBackgroundInvoices() {
                       aria-label="scrollable auto tabs example"
                     >
                       <Tab label="Detailed invoice Report" {...a11yProps(0)} />
-                      <Tab label="Invoice Deleted report " {...a11yProps(1)} />
+                      <PremiumFeatureTooltip title="Premium Feature: Unlock to view deleted invoices">
+                        <Tab
+                          label="Invoice Deleted report"
+                          {...a11yProps(1)}
+                          disabled={true}
+                        />
+                      </PremiumFeatureTooltip>
                     </Tabs>
                   </AccordionDetails>
                 </Accordion>
