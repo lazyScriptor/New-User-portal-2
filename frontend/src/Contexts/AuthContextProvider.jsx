@@ -13,7 +13,7 @@ function AuthContextProvider({ children , CURRENT_USER }) {
     try {
       console.log("object")
       axios
-        .get("http://localhost:8085/isUserAuth", {
+        .get(`${import.meta.env.VITE_API_BASE_URL}/auth/verify`, {
           headers: {
             "x-access-token": localStorage.getItem("token"),
           },

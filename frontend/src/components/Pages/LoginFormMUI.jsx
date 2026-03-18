@@ -28,7 +28,7 @@ function parseJwt(token) {
       .map(function (c) {
         return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
       })
-      .join("")
+      .join(""),
   );
 
   return JSON.parse(jsonPayload);
@@ -73,7 +73,7 @@ function LoginFormMUI() {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:8085/getUserRole/${userName}`
+        `http://localhost:8085/getUserRole/${userName}`,
       );
       if (response.data.length > 0) {
         setUsernameArray(response.data);
@@ -95,39 +95,58 @@ function LoginFormMUI() {
 
   const onSubmit = async (data) => {
     try {
-      await axios
-        .get(`http://localhost:8085/loginValidate`, {
-          params: data,
-        })
-        .then((res) => {
-          console.log("This is the response", res.data);
-          if (!res.data.auth) {
-            setPasswordWrong("Your Password is wrong ");
-            // setLogInStatus(false);
-            // setIsAuthenticated(false);
-          } else {
-            console.log("elsepart", res.data.auth);
-            localStorage.setItem("token", res.data.token);
-            // setLogInStatus(true);
-            // setIsAuthenticated(true);
-            // After successful login
-            localStorage.setItem("userRole", res.data.result);
-            localStorage.setItem("username", res.data.username);
+      // 1. Await the response directly (No .then() chaining)
+      // 2. Pass 'data' directly as the body, not wrapped in a { params: } object
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
+        data,
+      );
 
-            // setUserRole(res.data.result);
-            const userRole = parseJwt(res.data.token).userRole;
-            console.log(userRole);
-            if (userRole == "warehouse handler") {
-              navigate("/WH-dashboard");
-            } else if (userRole == "cashier") {
-              navigate("/C-dashboard");
-            } else if (userRole == "admin") {
-              navigate("/dashboardmain");
-            }
-          }
-        });
+      console.log("This is the response", res.data);
+
+      // If the backend returns a 200 OK but auth is false
+      if (!res.data.auth) {
+        setPasswordWrong("Your username or password is incorrect.");
+      } else {
+        console.log("Login successful!", res.data.auth);
+
+        // Store credentials in local storage
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("userRole", res.data.result);
+        localStorage.setItem("username", res.data.username);
+
+        // Decode token to get role
+        const userRole = parseJwt(res.data.token).userRole;
+        console.log("Navigating for role:", userRole);
+
+        // 3. Use strict equality (===) for string comparisons
+        if (userRole === "warehouse handler") {
+          navigate("/WH-dashboard");
+        } else if (userRole === "cashier") {
+          navigate("/C-dashboard");
+        } else if (userRole === "admin") {
+          navigate("/dashboardmain");
+        }
+      }
     } catch (error) {
-      console.error("Login frontend Error occured", error);
+      console.error("Login frontend Error occurred:", error);
+
+      // 4. Handle HTTP errors (e.g., Backend sends 401 Unauthorized or 404 Not Found)
+      if (error.response) {
+        // The server responded with a status code outside the 2xx range
+        setPasswordWrong(
+          error.response.data.message ||
+            "Invalid credentials. Please try again.",
+        );
+      } else if (error.request) {
+        // The request was made but no response was received (Server down/Network error)
+        setPasswordWrong(
+          "Cannot connect to the server. Please check your connection.",
+        );
+      } else {
+        // Something else broke
+        setPasswordWrong("An unexpected error occurred.");
+      }
     }
   };
 
