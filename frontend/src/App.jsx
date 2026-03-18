@@ -243,8 +243,8 @@ export default function App() {
                   <>
                     <AdminAuth>
                       <Sidebar />
-                      {/* <DashboardMain /> */}
-                      <CustomerDashboard/>
+                      <DashboardMain />
+                      {/* <CustomerDashboard/> */}
                     </AdminAuth>
                   </>
                 }
